@@ -289,8 +289,8 @@ function HeroSection({ scrollTo }: { scrollTo: (id: string) => void }) {
           {/* CTAs */}
           <div className="flex flex-wrap gap-3 mb-10">
             <a
-              href="/CV ASMA IDBENSALAH V1.pdf"
-              download="CV ASMA IDBENSALAH V1.pdf"
+              href="/cv.pdf"
+              download="cv.pdf"
               className="inline-flex items-center gap-2 px-5 py-3 bg-olive text-white font-medium rounded-xl hover:bg-olive-dark transition-colors shadow-sm text-sm"
             >
               <Download size={16} />
