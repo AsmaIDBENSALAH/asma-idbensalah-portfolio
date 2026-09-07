@@ -967,7 +967,7 @@ export default function App() {
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Designed & developed by{' '}
             <span className="font-semibold text-olive">Asma IDBENSALAH</span>
-            {' '}© 2026
+            {' '}© {new Date().getFullYear()}
           </p>
           <div className="flex items-center gap-3">
             {[
