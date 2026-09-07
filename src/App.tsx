@@ -695,16 +695,41 @@ function AchievementsSection() {
 
 function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    setStatus('sending')
-    setTimeout(() => {
+  const handleSubmit = async (e: FormEvent) => {
+  e.preventDefault()
+  setStatus('sending')
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        access_key: 'cdfc3a05-5b41-4746-b216-17e982b1eacb',
+        name: form.name,
+        email: form.email,
+        message: form.message,
+        subject: `New Portfolio Contact from ${form.name}`,
+      }),
+    })
+
+    const result = await response.json()
+
+    if (result.success) {
       setStatus('sent')
       setForm({ name: '', email: '', message: '' })
-    }, 1200)
+    } else {
+      setStatus('error')
+    }
+  } catch (error) {
+    console.error(error)
+    setStatus('error')
   }
+}
 
   return (
     <section id="contact" className="py-24 px-6 bg-gray-50 dark:bg-gray-900/40">
@@ -816,6 +841,11 @@ function ContactSection() {
                     <Send size={16} />
                     {status === 'sending' ? 'Sending…' : 'Send Message'}
                   </button>
+                  {status === 'error' && (
+  <p className="text-sm text-red-500 text-center">
+    Something went wrong. Please try again.
+  </p>
+)}
                 </form>
               )}
             </div>
